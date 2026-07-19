@@ -1,0 +1,39 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.define "web01" do |web01|
+    web01.vm.box = "ubuntu/focal64"
+    web01.vm.hostname = "web01"
+    web01.vm.network "private_network", ip: "192.168.56.10"
+    web01.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+      vb.cpus = 1
+    end
+    web01.vm.provision "shell", path: "provision_web01.sh"
+  end
+
+  config.vm.define "web02" do |web02|
+    web02.vm.box = "ubuntu/focal64"
+    web02.vm.hostname = "web02"
+    web02.vm.network "private_network", ip: "192.168.56.11"
+    web02.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+      vb.cpus = 1
+    end
+    web02.vm.provision "shell", path: "provision_web02.sh"
+  end
+
+  config.vm.define "db01" do |db01|
+    db01.vm.box = "centos/7"
+    db01.vm.hostname = "db01"
+    db01.vm.network "private_network", ip: "192.168.56.12"
+    db01.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+      vb.cpus = 1
+    end
+    db01.vm.provision "shell", path: "provision_db.sh"
+  end
+
+end

@@ -3,12 +3,14 @@
 set -e
 
 echo "Updating system packages..."
-yum update -y
-
 echo "Configuring CentOS vault repos (EOL fix)..."
 sed -i 's/mirror.centos.org/vault.centos.org/g' /etc/yum.repos.d/CentOS-Base.repo
 sed -i 's/^mirrorlist/#mirrorlist/' /etc/yum.repos.d/CentOS-Base.repo
 sed -i 's/^#baseurl/baseurl/' /etc/yum.repos.d/CentOS-Base.repo
+
+yum update -y
+
+
 yum clean all
 
 echo "Installing MariaDB..."

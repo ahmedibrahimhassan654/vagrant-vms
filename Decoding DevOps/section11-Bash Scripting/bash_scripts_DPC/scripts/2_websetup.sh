@@ -43,4 +43,9 @@ rm -rf /tmp/webfiles
 echo
 
 sudo systemctl status httpd
+# listing /var/www/html/
+echo "########################################"
+echo "listing /var/www/html/"
+echo "########################################"
+
 ls /var/www/html/

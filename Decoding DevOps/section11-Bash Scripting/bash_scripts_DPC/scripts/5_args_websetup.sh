@@ -6,6 +6,7 @@ SVC="httpd"
 #URL='https://www.tooplate.com/zip-templates/2098_health.zip'
 #ART_NAME='2098_health'
 TEMPDIR="/tmp/webfiles"
+website_folder="/var/www/html/"
 
 # Installing Dependencies
 echo "########################################"
@@ -32,14 +33,14 @@ echo
 
 wget $1 > /dev/null
 unzip $2.zip > /dev/null
-sudo cp -r $2/* /var/www/html/
+sudo cp -r $2/* $website_folder
 echo
 
 # Bounce Service
 echo "########################################"
 echo "Restarting HTTPD service"
 echo "########################################"
-systemctl restart $SVC
+systemctl restart $SVC 
 echo
 
 # Clean Up
@@ -49,5 +50,22 @@ echo "########################################"
 rm -rf $TEMPDIR
 echo
 
-sudo systemctl status $SVC
-ls /var/www/html/
+sudo systemctl status $SVC --no-pager
+
+# listing /var/www/html/
+echo "########################################"
+echo "listing /var/www/html/"
+echo "########################################"
+
+ls $website_folder
+
+
+# Display Website URL
+echo "########################################"
+echo "Website URL"
+echo "########################################"
+
+VM_IP=$(ip -4 -o addr show | awk '$4 ~ /^192\.168\.10\./ {sub("/.*", "", $4); print $4; exit}')
+
+echo "Open the website in your browser:"
+echo "http://${VM_IP}"

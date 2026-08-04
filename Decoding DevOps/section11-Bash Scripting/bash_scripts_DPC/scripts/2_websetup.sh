@@ -42,10 +42,20 @@ echo "########################################"
 rm -rf /tmp/webfiles
 echo
 
-sudo systemctl status httpd
+sudo systemctl status httpd --no-pager
 # listing /var/www/html/
 echo "########################################"
 echo "listing /var/www/html/"
 echo "########################################"
 
 ls /var/www/html/
+
+# Display Website URL
+echo "########################################"
+echo "Website URL"
+echo "########################################"
+
+VM_IP=$(ip -4 -o addr show | awk '$4 ~ /^192\.168\.10\./ {sub("/.*", "", $4); print $4; exit}')
+
+echo "Open the website in your browser:"
+echo "http://${VM_IP}"
